@@ -1,0 +1,29 @@
+a) EC2 Instance Setup
+I launched a t2.micro Ubuntu Free Tier EC2 instance inside a public subnet of my VPC.
+Enabled Auto-assign Public IP so the server is reachable from the internet.
+Attached a Security Group allowing:
+Port 22 (SSH) — restricted to my IP
+Port 80 (HTTP) — open to the public for website access
+I then connected to the instance using SSH.
+
+b) Installing & Configuring Nginx
+
+sudo apt update
+sudo apt install nginx -y
+sudo systemctl enable nginx
+sudo systemctl start nginx
+
+I uploaded my project files (index.html and AI_RESUME.pdf) and deployed them:
+
+sudo cp ~/Project/* /var/www/html/
+sudo chown -R www-data:www-data /var/www/html/
+sudo chmod -R 755 /var/www/html/
+sudo systemctl restart nginx
+
+c) Resume Static Website Hosting
+My index.html contains a link and embedded viewer for the PDF resume:
+<a href="AI_RESUME.pdf" target="_blank">View Resume</a>
+
+Once deployed, visiting:  
+
+Link : http://13.234.122.187/

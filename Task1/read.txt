@@ -1,0 +1,41 @@
+For this project, I designed a basic AWS network architecture that includes a VPC with both public and private subnets, along with internet access for public resources and controlled outbound access for private resources.
+VPC Design
+I created one VPC with the CIDR range 10.0.0.0/16.
+This range allows up to 65,536 IP addresses and provides enough room to divide into multiple subnets.
+Subnet Design
+I created 4 subnets — two public and two private — spread across two Availability Zones for high availability.
+Public Subnets
+These subnets are connected to the Internet Gateway (IGW) through the public route table.
+EC2 instances launched here get direct internet access (via an IGW).
+Used for resources like ALBs, Bastion hosts, etc.
+Private Subnets
+These subnets do not have IGW access.
+Their route table sends outbound traffic to a NAT Gateway, which allows:
+Private instances to download OS updates/packages.
+Prevents the internet from directly initiating a connection to them.
+Routing Setup
+Public Route Table
+Has route: 0.0.0.0/0 → Internet Gateway
+Private Route Table
+Has route: 0.0.0.0/0 → NAT Gateway
+This ensures the correct separation of public and private networks.
+NAT Gateway
+Created in Public Subnet 1 with an Elastic IP.
+Allows outbound-only internet access for Private Subnets.
+
+for access task 1
+GitHub Repo: https://github.com/ShivamGupta2003/Assignment_Flentas
+
+4. CIDR Ranges Used & Justification
+VPC CIDR
+10.0.0.0/16
+Large enough for future scaling.
+Easy to divide into /24 subnets.
+Public Subnet 1
+10.0.1.0/24
+Public Subnet 2
+10.0.2.0/24
+Private Subnet 1
+10.0.3.0/24
+Private Subnet 2
+10.0.4.0/24
